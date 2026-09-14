@@ -9,27 +9,38 @@
 <!-- dataLayer init -->
 <script>window.dataLayer = window.dataLayer || [];</script>
 
-<!-- Jitsu onload callback — MUST be defined before p.js (loaded via GTM) runs.
-     Stabilises the anonymous id (localStorage, survives *.github.io cookie rejection),
-     tracks PAGEVIEW, and exposes messageId to GTM via the jitsu_ready dataLayer event. -->
+<!-- Sfere tracking — client-owned dedup id, independent of Jitsu availability.
+     Generates one dedup id per pageview (sfere_event_id) shared across all pixels,
+     plus a persistent first-party visitor id (sfere_vid). Fires sfere_pageview to the
+     dataLayer synchronously so pixels never wait on (or fail with) Jitsu. -->
+<script>
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  var uuid = function () {
+    return (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'x-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  };
+  window.SFERE_EID = uuid();                         // dedup id, one per pageview
+  var m = document.cookie.match(/(?:^|;\s*)sfere_vid=([^;]+)/);
+  window.SFERE_VID = m ? m[1] : uuid();              // persistent visitor id (first-party cookie)
+  if (!m) document.cookie = 'sfere_vid=' + window.SFERE_VID + ';path=/;max-age=31536000;SameSite=Lax';
+  window.dataLayer.push({
+    event: 'sfere_pageview',
+    sfere_event_id: window.SFERE_EID,
+    sfere_visitor_id: window.SFERE_VID
+  });
+})();
+</script>
+
+<!-- Jitsu onload callback (best-effort, non-blocking): align id + send dedup id as a property.
+     MUST be defined before p.js (loaded via GTM) runs. -->
 <script>
 window.initSfere = function (jitsu) {
-  window.dataLayer = window.dataLayer || [];
-  try {                                   // stable anon id even on *.github.io
-    var KEY = 'sfere_anon_id', saved = localStorage.getItem(KEY);
-    if (saved) jitsu.setAnonymousId(saved);
-    else localStorage.setItem(KEY, jitsu.user().anonymousId);
+  try {
+    jitsu.setAnonymousId(window.SFERE_VID);
+    jitsu.track("PAGEVIEW", { sfere_event_id: window.SFERE_EID });
   } catch (e) {}
-  var u = jitsu.user() || {};
-  Promise.resolve(jitsu.track("PAGEVIEW")).then(function (r) {
-    var p = (r && r.payload) || r || {};
-    window.dataLayer.push({
-      event: 'jitsu_ready',
-      jitsu_anonymous_id: p.anonymousId || u.anonymousId || '',
-      jitsu_user_id: p.userId || u.id || '',
-      jitsu_message_id: p.messageId || ''
-    });
-  });
 };
 </script>
 
