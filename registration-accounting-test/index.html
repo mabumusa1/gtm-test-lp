@@ -6,38 +6,8 @@
 <title>Registration — GTM Test LP</title>
 <link rel="stylesheet" href="../assets/style.css">
 
-<!-- dataLayer init -->
-<script>window.dataLayer = window.dataLayer || [];</script>
-
-<!-- Client-owned dedup id — one per pageview, shared across all pixels, independent of Jitsu.
-     Fired synchronously so pixels never wait on (or fail with) Jitsu. -->
-<script>
-(function () {
-  window.dataLayer = window.dataLayer || [];
-  window.SFERE_EID = (window.crypto && crypto.randomUUID)
-    ? crypto.randomUUID()
-    : 'x-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-  window.dataLayer.push({ event: 'sfere_pageview', sfere_event_id: window.SFERE_EID });
-})();
-</script>
-
-<!-- Jitsu onload callback: let Jitsu manage its OWN natively-persisted anonymous id
-     (cookie __eventn_id). Per Jitsu docs we do NOT call setAnonymousId; we only READ the id
-     for advanced matching, and send our dedup id to Jitsu as an event property. -->
-<script>
-window.initSfere = function (jitsu) {
-  window.dataLayer = window.dataLayer || [];
-  try {
-    var u = jitsu.user() || {};
-    window.dataLayer.push({
-      event: 'jitsu_ready',
-      jitsu_anonymous_id: u.anonymousId || '',
-      jitsu_user_id: u.id || ''
-    });
-    jitsu.track("PAGEVIEW", { sfere_event_id: window.SFERE_EID });
-  } catch (e) {}
-};
-</script>
+<!-- Pure HTML: all tracking JS (dedup id, Jitsu initSfere, UTM + form behaviour) lives in
+     the GTM container GTM-KL5W86TH. This page ships only the GTM snippet below. -->
 
 <!-- Google Tag Manager — test container GTM-KL5W86TH -->
 <!-- Google Tag Manager -->
@@ -108,7 +78,5 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Click hooks the container listens for -->
 <a class="wa-float" href="https://wa.me/966000000000" aria-label="whatsapp">🟢</a>
 <a class="tel-float" href="tel:+966000000000">اتصل الآن</a>
-
-<script src="../js/app.js"></script>
 </body>
 </html>
