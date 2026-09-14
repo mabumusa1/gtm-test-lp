@@ -1,0 +1,91 @@
+/* Local Rewaa clone — RTL Arabic landing page (self-contained, no external deps) */
+:root{
+  --brand:#12b886;        /* Rewaa-ish teal/green */
+  --brand-dark:#0c8f6b;
+  --ink:#12203a;
+  --muted:#5b6b82;
+  --bg:#f5f8fb;
+  --card:#ffffff;
+  --line:#e5edf3;
+  --accent:#ff7a1a;       /* discount highlight */
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Tahoma","Segoe UI",Arial,sans-serif;
+  direction:rtl;text-align:right;
+  color:var(--ink);background:var(--bg);line-height:1.7;
+}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+img{max-width:100%}
+
+/* Header */
+.site-header{background:#fff;border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:14px}
+.logo{font-size:26px;font-weight:800;color:var(--brand);letter-spacing:-.5px}
+.logo span{color:var(--ink)}
+
+/* Hero + form */
+.hero{background:linear-gradient(135deg,#e9fbf4 0%,#f5f8fb 60%);padding-block:44px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.hero h1{font-size:34px;line-height:1.35;margin:0 0 10px}
+.hero .eyebrow{color:var(--brand-dark);font-weight:700;margin:0 0 6px}
+.hero .discount{display:inline-block;background:var(--accent);color:#fff;font-weight:800;
+  padding:8px 16px;border-radius:10px;margin:14px 0;font-size:19px}
+.hero p.sub{color:var(--muted);font-size:17px}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 12px 40px rgba(18,32,58,.08);padding:26px}
+.card h2{margin:0 0 6px;font-size:22px}
+.card .hint{color:var(--muted);margin:0 0 18px;font-size:14px}
+.field{margin-bottom:14px}
+.field input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:10px;
+  font-size:16px;font-family:inherit;background:#fbfdff}
+.field input:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(18,184,134,.15)}
+.elementor-button-link{display:block;width:100%;border:0;cursor:pointer;
+  background:var(--brand);color:#fff;font-size:18px;font-weight:800;font-family:inherit;
+  padding:15px;border-radius:10px;transition:background .15s}
+.elementor-button-link:hover{background:var(--brand-dark)}
+.elementor-button-link:disabled{opacity:.7;cursor:default}
+
+/* Sections */
+section.block{padding-block:44px}
+section.block h2.sec-title{text-align:center;font-size:27px;margin:0 0 28px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px}
+.feat h3{margin:0 0 8px;font-size:19px;color:var(--brand-dark)}
+.feat p{margin:0;color:var(--muted);font-size:15px}
+.badge{display:inline-block;background:#e9fbf4;color:var(--brand-dark);
+  font-weight:700;padding:6px 14px;border-radius:20px;font-size:14px;margin-bottom:12px}
+
+/* Trust strip */
+.trust{background:var(--brand);color:#fff;text-align:center;padding-block:34px}
+.trust .count{font-size:40px;font-weight:900;margin:0}
+.trust p{margin:6px 0 0;opacity:.95}
+
+/* Footer + floats */
+.site-footer{background:#0e1726;color:#9fb0c6;text-align:center;padding-block:22px;font-size:14px}
+.wa-float{position:fixed;inset-block-end:20px;inset-inline-start:20px;background:#25D366;color:#fff;
+  width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:28px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:50}
+.tel-float{position:fixed;inset-block-end:20px;inset-inline-end:20px;background:var(--ink);color:#fff;
+  padding:12px 18px;border-radius:30px;text-decoration:none;font-weight:700;
+  box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:50}
+
+/* Thank-you */
+.ty{min-height:70vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px}
+.ty .box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:44px;max-width:560px;
+  box-shadow:0 12px 40px rgba(18,32,58,.08)}
+.ty .check{width:78px;height:78px;border-radius:50%;background:#e9fbf4;color:var(--brand);
+  display:flex;align-items:center;justify-content:center;font-size:44px;margin:0 auto 18px}
+.ty h1{font-size:28px;margin:0 0 10px}
+.ty p{color:var(--muted);font-size:17px}
+#platform-reg{display:inline-block;margin-top:22px;background:var(--brand);color:#fff;
+  padding:14px 30px;border-radius:10px;text-decoration:none;font-weight:800;font-size:17px}
+#platform-reg:hover{background:var(--brand-dark)}
+
+@media(max-width:820px){
+  .hero .wrap{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .hero h1{font-size:27px}
+}

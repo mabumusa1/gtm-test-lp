@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registration — GTM Test LP</title>
+<link rel="stylesheet" href="../assets/style.css">
+
+<!-- SANDBOX OUTBOUND FIREWALL — must be first, before dataLayer + GTM -->
+<script src="../js/sandbox-blocker.js"></script>
+
+<!-- dataLayer init -->
+<script>window.dataLayer = window.dataLayer || [];</script>
+
+<!-- Google Tag Manager — test container GTM-KL5W86TH -->
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KL5W86TH');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KL5W86TH"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<header class="site-header">
+  <div class="wrap">
+    <div class="logo">GTM Test<span>.</span></div>
+    <a href="tel:+966000000000" class="elementor-button-link" style="width:auto;padding:10px 18px;font-size:15px">اتصل بنا</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">صفحة اختبار لإعداد Google Tag Manager</p>
+      <h1>نموذج تسجيل تجريبي لاختبار الوسوم</h1>
+      <p class="sub">هذه صفحة تجريبية غير حقيقية، الغرض منها فحص إطلاق الوسوم في GTM فقط.</p>
+      <div class="discount">Sandbox mode — لا تُرسل أي بيانات فعلية</div>
+      <p class="sub">املأ النموذج ثم أرسله لمحاكاة حدث التحويل (form_submit) والانتقال لصفحة الشكر.</p>
+    </div>
+
+    <!-- Lead form — DOM contract for the imported GTM container -->
+    <form id="main_registration" name="main-registration" class="card" novalidate>
+      <h2>نموذج تجريبي</h2>
+      <p class="hint">بيانات وهمية فقط — لأغراض اختبار الوسوم</p>
+      <div class="field">
+        <input id="form-field-name" name="form_fields[name]" type="text" placeholder="الاسم" required>
+      </div>
+      <div class="field">
+        <input id="form-field-mobile" name="form_fields[mobile]" type="tel" placeholder="رقم الجوال" required>
+      </div>
+      <div class="field">
+        <input id="form-field-email" name="form_fields[email]" type="email" placeholder="البريد الإلكتروني" required>
+      </div>
+      <input type="hidden" name="page_name" value="registration-accounting-test">
+      <button type="submit" class="elementor-button-link">إرسال (اختبار)</button>
+    </form>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2 class="sec-title">صفحة اختبار — بدون أي علامة تجارية حقيقية</h2>
+    <div class="grid3">
+      <div class="feat"><span class="badge">Test</span><h3>Page View</h3><p>يتم إطلاق وسوم PageView على كل الصفحات عند التحميل.</p></div>
+      <div class="feat"><span class="badge">Test</span><h3>Form Submit</h3><p>إرسال النموذج يدفع حدث form_submit إلى dataLayer.</p></div>
+      <div class="feat"><span class="badge">Test</span><h3>Thank You</h3><p>الانتقال لصفحة الشكر يطلق وسوم التحويل.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  GTM test landing page — sandboxed, no real data is sent.
+</footer>
+
+<!-- Click hooks the container listens for -->
+<a class="wa-float" href="https://wa.me/966000000000" aria-label="whatsapp">🟢</a>
+<a class="tel-float" href="tel:+966000000000">اتصل الآن</a>
+
+<script src="../js/app.js"></script>
+</body>
+</html>
