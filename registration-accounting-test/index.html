@@ -9,36 +9,31 @@
 <!-- dataLayer init -->
 <script>window.dataLayer = window.dataLayer || [];</script>
 
-<!-- Sfere tracking — client-owned dedup id, independent of Jitsu availability.
-     Generates one dedup id per pageview (sfere_event_id) shared across all pixels,
-     plus a persistent first-party visitor id (sfere_vid). Fires sfere_pageview to the
-     dataLayer synchronously so pixels never wait on (or fail with) Jitsu. -->
+<!-- Client-owned dedup id — one per pageview, shared across all pixels, independent of Jitsu.
+     Fired synchronously so pixels never wait on (or fail with) Jitsu. -->
 <script>
 (function () {
   window.dataLayer = window.dataLayer || [];
-  var uuid = function () {
-    return (window.crypto && crypto.randomUUID)
-      ? crypto.randomUUID()
-      : 'x-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-  };
-  window.SFERE_EID = uuid();                         // dedup id, one per pageview
-  var m = document.cookie.match(/(?:^|;\s*)sfere_vid=([^;]+)/);
-  window.SFERE_VID = m ? m[1] : uuid();              // persistent visitor id (first-party cookie)
-  if (!m) document.cookie = 'sfere_vid=' + window.SFERE_VID + ';path=/;max-age=31536000;SameSite=Lax';
-  window.dataLayer.push({
-    event: 'sfere_pageview',
-    sfere_event_id: window.SFERE_EID,
-    sfere_visitor_id: window.SFERE_VID
-  });
+  window.SFERE_EID = (window.crypto && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : 'x-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  window.dataLayer.push({ event: 'sfere_pageview', sfere_event_id: window.SFERE_EID });
 })();
 </script>
 
-<!-- Jitsu onload callback (best-effort, non-blocking): align id + send dedup id as a property.
-     MUST be defined before p.js (loaded via GTM) runs. -->
+<!-- Jitsu onload callback: let Jitsu manage its OWN natively-persisted anonymous id
+     (cookie __eventn_id). Per Jitsu docs we do NOT call setAnonymousId; we only READ the id
+     for advanced matching, and send our dedup id to Jitsu as an event property. -->
 <script>
 window.initSfere = function (jitsu) {
+  window.dataLayer = window.dataLayer || [];
   try {
-    jitsu.setAnonymousId(window.SFERE_VID);
+    var u = jitsu.user() || {};
+    window.dataLayer.push({
+      event: 'jitsu_ready',
+      jitsu_anonymous_id: u.anonymousId || '',
+      jitsu_user_id: u.id || ''
+    });
     jitsu.track("PAGEVIEW", { sfere_event_id: window.SFERE_EID });
   } catch (e) {}
 };
